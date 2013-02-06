@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E944109B-0B7A-4ADE-8602-004CEFA5897D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{C83115E9-B3B9-4848-9312-5C298CC1B924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy", "Nancy\Nancy.csproj", "{34576216-0DCA-4B0F-A0DC-9075E75A676F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		MonoDebug|Any CPU = MonoDebug|Any CPU
+		MonoDebug|x86 = MonoDebug|x86
+		MonoRelease|Any CPU = MonoRelease|Any CPU
+		MonoRelease|x86 = MonoRelease|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+		SignedRelease|Any CPU = SignedRelease|Any CPU
+		SignedRelease|x86 = SignedRelease|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.MonoDebug|Any CPU.ActiveCfg = MonoDebug|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.MonoDebug|Any CPU.Build.0 = MonoDebug|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.MonoDebug|x86.ActiveCfg = MonoDebug|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.MonoRelease|Any CPU.ActiveCfg = MonoRelease|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.MonoRelease|Any CPU.Build.0 = MonoRelease|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.MonoRelease|x86.ActiveCfg = MonoRelease|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.Release|x86.ActiveCfg = Release|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.SignedRelease|Any CPU.ActiveCfg = SignedRelease|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.SignedRelease|Any CPU.Build.0 = SignedRelease|Any CPU
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F}.SignedRelease|x86.ActiveCfg = SignedRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F} = {E944109B-0B7A-4ADE-8602-004CEFA5897D}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Nancy.Demo.Hosting.Aspnet\Nancy.Demo.Hosting.Aspnet.csproj
+	EndGlobalSection
+EndGlobal
