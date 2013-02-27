@@ -160,19 +160,32 @@
             contents.Append(value);
         }
 
-        public virtual void WriteAttribute(string name, Tuple<string, int> prefix, Tuple<string, int> suffix, params Tuple<Tuple<string, int>, Tuple<object, int>, bool>[] values)
+        public virtual void WriteAttribute(string name, Tuple<string, int> prefix, Tuple<string, int> suffix, params AttributeValue[] values)
+        {
+            var attributeValue = this.BuildAttribute(name, prefix, suffix, values);
+            this.WriteLiteral(attributeValue);
+        }
+
+        public virtual void WriteAttributeTo(TextWriter writer, string name, Tuple<string, int> prefix, Tuple<string, int> suffix, params AttributeValue[] values)
+        {
+            var attributeValue = this.BuildAttribute(name, prefix, suffix, values);
+            this.WriteLiteralTo(writer, attributeValue);
+        }
+
+        private string BuildAttribute(string name, Tuple<string, int> prefix, Tuple<string, int> suffix,
+                                      params AttributeValue[] values)
         {
             var writtenAttribute = false;
             var attributeBuilder = new StringBuilder(prefix.Item1);
 
             foreach (var value in values)
             {
-                if (ShouldWriteValue(value.Item2.Item1))
+                if (this.ShouldWriteValue(value.Value.Item1))
                 {
-                    var stringValue = this.GetStringValue(value.Item2.Item1);
-                    var valuePrefix = value.Item1.Item1;
+                    var stringValue = this.GetStringValue(value);
+                    var valuePrefix = value.Prefix.Item1;
 
-                    if (!String.IsNullOrEmpty(valuePrefix))
+                    if (!string.IsNullOrEmpty(valuePrefix))
                     {
                         attributeBuilder.Append(valuePrefix);
                     }
@@ -188,13 +201,31 @@
 
             if (renderAttribute)
             {
-                contents.Append(attributeBuilder);
+                return attributeBuilder.ToString();
             }
+
+            return string.Empty;
         }
 
-        private string GetStringValue(object value)
+        private string GetStringValue(AttributeValue value)
         {
-            return value as string ?? value.ToString();
+            if (value.IsLiteral)
+            {
+                return (string)value.Value.Item1;
+            }
+
+            if (value.Value.Item1 is IHtmlString)
+            {
+                return ((IHtmlString)value.Value.Item1).ToHtmlString();
+            }
+
+            if (value.Value.Item1 is DynamicDictionaryValue)
+            {
+                var dynamicValue = (DynamicDictionaryValue)value.Value.Item1;
+                return dynamicValue.HasValue ? dynamicValue.Value.ToString() : string.Empty;
+            }
+
+            return value.Value.Item1.ToString();
         }
 
         private bool ShouldWriteValue(object value)

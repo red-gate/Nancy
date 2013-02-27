@@ -107,11 +107,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AttributeValue.cs" />
     <Compile Include="CSharp\CSharpModelCodeGenerator.cs" />
     <Compile Include="CSharp\CSharpRazorViewRenderer.cs" />
     <Compile Include="DefaultRazorConfiguration.cs" />
     <Compile Include="HelperResult.cs" />
     <Compile Include="HtmlHelpers.cs" />
+    <Compile Include="HtmlHelpersExtensions.cs" />
     <Compile Include="IHtmlString.cs" />
     <Compile Include="INancyRazorView.cs" />
     <Compile Include="IRazorConfiguration.cs" />

@@ -5,6 +5,7 @@
     using Conventions;
 
     using Nancy.Diagnostics;
+    using Nancy.Security;
     using Nancy.Session;
     using Nancy.TinyIoc;
     using Nancy.ViewEngines;
@@ -26,7 +27,6 @@
             // We don't call base because we don't want autoregister
             // we just register our one known dependency as an application level singleton
             existingContainer.Register<IApplicationDependency, ApplicationDependencyClass>().AsSingleton();
-            existingContainer.Register<IRazorConfiguration, MyRazorConfiguration>().AsSingleton();
         }
 
         protected override void ConfigureRequestContainer(TinyIoCContainer existingContainer, NancyContext context)
@@ -42,6 +42,7 @@
 
             StaticConfiguration.EnableRequestTracing = true;
             StaticConfiguration.DisableErrorTraces = false;
+            Csrf.Enable(pipelines);
 
             this.Conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("moo", "Content"));
 
