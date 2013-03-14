@@ -154,7 +154,7 @@ namespace Nancy.Conventions
                 }
 
                 var responseFactory =
-                    ResponseFactoryCache.GetOrAdd(new ResponseFactoryCacheKey(path, root, TODO), BuildContentDelegate(ctx, root, requestedFile, contentFile, new string[] { }));
+                    ResponseFactoryCache.GetOrAdd(new ResponseFactoryCacheKey(path, root, contentFile), BuildContentDelegate(ctx, root, requestedFile, contentFile, new string[] { }));
 
                 return responseFactory.Invoke(ctx);
             };
