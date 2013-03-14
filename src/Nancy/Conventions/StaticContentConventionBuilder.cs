@@ -17,11 +17,13 @@ namespace Nancy.Conventions
         {
             private readonly string m_Path;
             private readonly string m_RootPath;
+            private readonly string m_ContentPath;
 
-            public ResponseFactoryCacheKey(string path, string rootPath)
+            public ResponseFactoryCacheKey(string path, string rootPath, string contentPath)
             {
                 m_Path = path;
                 m_RootPath = rootPath;
+                m_ContentPath = contentPath;
             }
 
             public string Path
@@ -34,11 +36,16 @@ namespace Nancy.Conventions
                 get { return m_RootPath; }
             }
 
+            public string ContentPath
+            {
+                get { return m_ContentPath; }
+            }
+
             public bool Equals(ResponseFactoryCacheKey other)
             {
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return string.Equals(m_Path, other.m_Path) && string.Equals(m_RootPath, other.m_RootPath);
+                return string.Equals(m_Path, other.m_Path) && string.Equals(m_RootPath, other.m_RootPath) && string.Equals(m_ContentPath, other.m_ContentPath);
             }
 
             public override bool Equals(object obj)
@@ -53,7 +60,10 @@ namespace Nancy.Conventions
             {
                 unchecked
                 {
-                    return ((m_Path != null ? m_Path.GetHashCode() : 0)*397) ^ (m_RootPath != null ? m_RootPath.GetHashCode() : 0);
+                    int hashCode = (m_Path != null ? m_Path.GetHashCode() : 0);
+                    hashCode = (hashCode*397) ^ (m_RootPath != null ? m_RootPath.GetHashCode() : 0);
+                    hashCode = (hashCode*397) ^ (m_ContentPath != null ? m_ContentPath.GetHashCode() : 0);
+                    return hashCode;
                 }
             }
         }
@@ -111,7 +121,7 @@ namespace Nancy.Conventions
                 }
 
                 var responseFactory =
-                    ResponseFactoryCache.GetOrAdd(new ResponseFactoryCacheKey(path, root), BuildContentDelegate(ctx, root, requestedPath, contentPath, allowedExtensions));
+                    ResponseFactoryCache.GetOrAdd(new ResponseFactoryCacheKey(path, root, contentPath), BuildContentDelegate(ctx, root, requestedPath, contentPath, allowedExtensions));
 
                 return responseFactory.Invoke(ctx);
             };
@@ -144,7 +154,7 @@ namespace Nancy.Conventions
                 }
 
                 var responseFactory =
-                    ResponseFactoryCache.GetOrAdd(new ResponseFactoryCacheKey(path, root), BuildContentDelegate(ctx, root, requestedFile, contentFile, new string[] { }));
+                    ResponseFactoryCache.GetOrAdd(new ResponseFactoryCacheKey(path, root, TODO), BuildContentDelegate(ctx, root, requestedFile, contentFile, new string[] { }));
 
                 return responseFactory.Invoke(ctx);
             };
