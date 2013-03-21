@@ -51,6 +51,8 @@
             A.CallTo(() => this.rootPathProvider.GetRootPath()).Returns(Path.Combine(Environment.CurrentDirectory, "TestViews"));
 
             this.fileSystemViewLocationProvider = new FileSystemViewLocationProvider(this.rootPathProvider, new DefaultFileSystemReader());
+
+            AppDomainAssemblyTypeScanner.AddAssembliesToScan("Nancy.ViewEngines.Razor.Tests.Models.dll");
         }
 
         [Fact]
@@ -160,8 +162,6 @@
         [Fact]
         public void RenderView_csharp_should_be_able_to_use_a_model_from_another_assembly()
         {
-            AppDomainAssemblyTypeScanner.AddAssembliesToScan("Nancy.ViewEngines.Razor.Tests.Models.dll");
-
             // Given
             var view = new StringBuilder()
                 .AppendLine("@model Nancy.ViewEngines.Razor.Tests.Models.Person")
@@ -189,8 +189,6 @@
         [Fact]
         public void RenderView_csharp_should_be_able_to_use_a_using_statement()
         {
-            AppDomainAssemblyTypeScanner.AddAssembliesToScan("Nancy.ViewEngines.Razor.Tests.Models");
-
             // Given
             var view = new StringBuilder()
                 .AppendLine("@model Nancy.ViewEngines.Razor.Tests.Models.Person")
@@ -493,7 +491,7 @@
                 "vbhtml",
                 () => new StringReader(view.ToString())
             );
-#endif
+
             var stream = new MemoryStream();
 
             A.CallTo(() => this.configuration.GetAssemblyNames()).Returns(new[] { "Nancy.ViewEngines.Razor.Tests" });
@@ -506,7 +504,7 @@
             var output = ReadAll(stream).Trim();
             output.ShouldEqual("<h1>Hi, Nancy!</h1>");
         }
-
+#endif
         [Fact(Skip = "Multi-threading regression test")]
         public void should_work_on_multiple_threads()
         {
