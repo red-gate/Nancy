@@ -230,7 +230,7 @@ namespace Nancy.Bootstrapper
                 {
                     try
                     {
-                        Assembly inspectedAssembly = Assembly.ReflectionOnlyLoadFrom(unloadedAssembly);
+                        var inspectedAssembly = Assembly.ReflectionOnlyLoadFrom(unloadedAssembly);
 
                         if (inspectedAssembly.GetReferencedAssemblies().Any(r => r.Name.StartsWith("Nancy", StringComparison.OrdinalIgnoreCase)))
                         {
