@@ -217,33 +217,31 @@ namespace Nancy.Bootstrapper
 
             UpdateAssemblies();
 
-            if (!AppDomainAssemblyTypeScannerOptions.LoadCurrentlyUnloadedAssemblies)
+            if (AppDomainAssemblyTypeScannerOptions.LoadCurrentlyUnloadedAssemblies)
             {
-                return;
-            }
-
-            foreach (var directory in GetAssemblyDirectories())
-            {
-                var existingAssemblyPaths =
-                    assemblies.Select(a => a.Location).ToArray();
-
-                var unloadedAssemblies = Directory
-                    .GetFiles(directory, "*.dll")
-                    .Where(f => !existingAssemblyPaths.Contains(f, StringComparer.InvariantCultureIgnoreCase)).ToArray();
-
-                foreach (var unloadedAssembly in unloadedAssemblies)
+                foreach (var directory in GetAssemblyDirectories())
                 {
-                    try
-                    {
-                        Assembly inspectedAssembly = Assembly.ReflectionOnlyLoadFrom(unloadedAssembly);
+                    var existingAssemblyPaths =
+                        assemblies.Select(a => a.Location).ToArray();
 
-                        if (inspectedAssembly.GetReferencedAssemblies().Any(r => r.Name.StartsWith("Nancy", StringComparison.OrdinalIgnoreCase)))
-                        {
-                            Assembly.Load(inspectedAssembly.GetName());
-                        }
-                    }
-                    catch
+                    var unloadedAssemblies = Directory
+                        .GetFiles(directory, "*.dll")
+                        .Where(f => !existingAssemblyPaths.Contains(f, StringComparer.InvariantCultureIgnoreCase)).ToArray();
+
+                    foreach (var unloadedAssembly in unloadedAssemblies)
                     {
+                        try
+                        {
+                            Assembly inspectedAssembly = Assembly.ReflectionOnlyLoadFrom(unloadedAssembly);
+
+                            if (inspectedAssembly.GetReferencedAssemblies().Any(r => r.Name.StartsWith("Nancy", StringComparison.OrdinalIgnoreCase)))
+                            {
+                                Assembly.Load(inspectedAssembly.GetName());
+                            }
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
             }
