@@ -217,6 +217,11 @@ namespace Nancy.Bootstrapper
 
             UpdateAssemblies();
 
+            if (!AppDomainAssemblyTypeScannerOptions.LoadCurrentlyUnloadedAssemblies)
+            {
+                return;
+            }
+
             foreach (var directory in GetAssemblyDirectories())
             {
                 var existingAssemblyPaths =
@@ -367,5 +372,16 @@ namespace Nancy.Bootstrapper
         {
             return types.Where(t => !typeof(TType).IsAssignableFrom(t));
         }
+    }
+
+    public static class AppDomainAssemblyTypeScannerOptions
+    {
+        static AppDomainAssemblyTypeScannerOptions()
+        {
+            LoadCurrentlyUnloadedAssemblies = true;
+        }
+
+        /// <summary> If set to true (default), then Nancy will attempt to load currently unlaoded assemblies in your app path before scanning the AppDomain </summary>
+        public static bool LoadCurrentlyUnloadedAssemblies { get; set; }
     }
 }
